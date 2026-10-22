@@ -1,0 +1,24 @@
+# Maven generated files
+target/
+
+# Java compiled files
+*.class
+
+# Docs
+/doc/
+
+# IDE files
+.idea/
+.vscode/
+.project
+.classpath
+.settings/
+
+# Operating system files
+.DS_Store
+Thumbs.db
+
+# Local environment and secrets
+.env
+.env.*
+!.env.example

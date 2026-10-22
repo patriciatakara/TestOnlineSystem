@@ -1,0 +1,657 @@
+@charset "UTF-8";
+
+/***** MENU BAR PROPERTIES *****/
+ul{
+	list-style-type:none;
+	margin:0;
+	padding:0;
+	overflow:hidden;
+	background-color:#333;
+}
+li{
+	float: left;
+}
+li a{
+	display:inline-block;
+	color:white;
+	text-align:center;
+	padding:14px 16px;
+	text-decoration:none;
+	font-size:18px;
+}
+.active{
+	background-color:rgb(176,131,79);
+}
+
+.ulLogout{
+	width: 100%; 
+	list-style-type:none; 
+	margin:0;
+	padding:0;
+	overflow:hidden;
+	background-color:#333;
+}
+
+
+
+/***** Forms field and buttons *****/
+.fieldSize{
+	height:20px;
+}
+.signButton{
+	text-align:center;
+	font-size:13px;
+	padding: 4px 10px;
+}
+
+
+/***** Index Page *****/
+.entirePageIndex {
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background-image:  url('../images/index.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+.entirePageIndex::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background-color: rgba(255, 255, 255, 0.1);
+    z-index: -1;
+}
+.entirePageIndex::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background-image:  url('../images/admin4.png');
+    opacity: 0.1;
+    background-repeat: no-repeat;
+    background-size: cover;
+    z-index: -2;
+}
+.titleIndex{
+	font-family:timesnewroman;
+	text-align:center;
+	font-size: 70px;
+	padding-top:50px;
+	margin:15px;
+	color:rgb(235,252,255);
+ 	font-size: 4rem;	
+    -webkit-text-stroke: 2px rgb(222,218,232);
+}
+.textIndex{
+	text-align:center;
+	padding-top:22px;
+	font-size: 18px;	
+	width: 580px; 
+	height: 100px; 
+	color:rgb(221,239,240);
+	position: relative;
+	margin: auto;
+	top: 0;
+	bottom: 0;
+	}
+	
+.bottom-bar {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 30px;
+  background-color: silver;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.bottom-barADM {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 30px;
+  background-color: silver;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.email {
+  color: black;
+  font-size: 13px;
+  font-family: Arial;
+  padding-left:10px;
+  font-style: italic;
+}
+.year {
+  color: black;
+  font-size: 12px;
+  font-family: Arial;
+  padding-right:10px;
+  font-style: italic;
+}
+
+
+
+/***** Registration Form Page *****/
+.entirePageRegistration{
+	position: fixed;
+	top: 0;
+	right: 0;
+	bottom: 0;
+	left: 0;
+	background-color:rgb(75,110,120);
+}
+.formCenter3{
+	display: flex; 
+	flex-direction: column;
+	align-items: center; 
+	justify-content: center; 
+	margin-top:30px;
+}
+
+
+/***** STUDENT *****/
+/* Student Login Page */
+.titleIndexStudent{
+	Color:black; 
+	text-align:center; 
+	padding-top:240px;
+	font-size:62px; 
+	font-family:timenewroman;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+.formCenter1{
+	display: flex; 
+	flex-direction: column;
+	align-items: center; 
+	justify-content: center; 
+	margin-top:30px;
+	margin-right:85px;
+}
+.entirePageStudentHub{
+  background-image: url('../images/studentHubL.jpg');  
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center; 
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  height:100vh;
+}
+.entirePageStudent{
+  position:fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background-color:rgb(75,110,120);
+}
+/* Quiz format on Exams */
+.quiz {
+	border: 1px solid rgb(75,110,120);
+	padding: 5px;
+	margin-bottom: 10px;
+}
+.question {
+	font-weight: bold;
+	margin-bottom: 14px;
+}
+.answer {
+	margin-bottom: 5px;
+}
+/*Timer*/
+ .timer{
+	font-size:22px;
+	background-color:ivory;
+	color: Darkred;
+	font-weight: bold;
+	float:right;
+	padding-right:8px;
+	border: 2px groove red;
+  	border-radius: 1px;
+  	padding: 5px;
+ 	margin: 0px;
+}
+/* Display Results after exam is done */
+.resultBoard{
+	width: 500;
+    height:100vh; 
+	padding-top:30px;
+	padding-bottom:0px;
+    justify-content: center;
+    text-align:center;
+    display: flex;
+    color:black;
+}
+/*board for DisplayResult.jsp */
+.boardBorder {
+	width:400px;
+	height:300px; 
+    justify-content: center;
+    text-align:center;
+    padding:25px;
+	outline:2px groove black;
+	background-color:rgb(204,208,219);
+}
+/* button to print & logout */
+.buttonPL{
+	display: flex;
+	align-items: center; 
+	justify-content: center;
+	padding-top:30px; 
+	text-align:centerJustify;
+}  
+.buttonPL button {
+	font-size:13px;
+	padding: 7px 30px;
+}
+.buttonPL button:not(:last-child) {
+	margin-right: 200px;
+}
+/*Reports board */
+.boardReport{
+	height:400px; 
+	width:560px; 	
+	outline:2px groove black; 
+	background-color:rgb(204,208,219); 
+	display:flex; flex-direction: column; 
+	align-items:center; 
+	justify-content:center;
+}
+
+
+
+
+
+/****** FACULTY *******/
+/* Faculty Login Page */
+.entirePageFacultyLogin{
+	position: fixed;
+	top: 0;
+	right: 0;
+	bottom: 0;
+	left: 0;
+	background-color:rgb(75,110,120);
+} 
+.entirePageFacultyHub{
+	top: 0;
+	right: 0;
+	bottom: 0;
+	left: 0;
+	height:100vh;
+ 	background-image: url('../images/facultyHub.jpg'); 
+	background-repeat: no-repeat;
+	background-size: cover;
+	background-position: center; 
+}
+.formCenter2{
+	display: flex; 
+	flex-direction: column;
+	align-items: center; 
+	justify-content: center; 
+	margin-top:30px;
+	margin-right:85px;
+}
+/* Faculty Hub */
+.entirePageMain{
+  position:fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background-color:rgb(75,110,120);
+}
+/* For the tables background (on the body)*/
+.entirePageAfterDropDown{  
+  position:sticky; 
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background-color:rgb(180,190,199);
+}
+.entirePageAfterDropDownUser{  
+	background-color: rgb(180, 190, 199);
+  min-height: 100vh;
+	overflow: visible;
+}
+.button{
+	background-color:rgb(230, 230, 230);
+	color: black;
+	font-size:13px;
+    border: none;
+    border-radius: 5px;
+    padding: 15px 25px;
+    margin:20x;
+}
+.backNewTest{
+	outline:1px solid rgb(184,198,204); 
+  	height: 100vh;
+  	width: 100vh;
+  	background-color:rgb(75,110,120);
+}
+.backAddQue{
+	outline:1px solid rgb(184,198,204);
+  	height:100vh;
+  	width: 100vh;
+  	background-color:rgb(75,110,120);;
+}
+
+.backDelQue{
+	outline:1px solid rgb(184,198,204);
+  	height:100vh;
+  	width: 100vh;
+  	background-color:rgb(75,110,120);
+}
+/* display the buttons and titles in a row format*/
+.element {
+	display: flex;
+	flex-direction: row;
+	height: 100vh;
+  }
+.buttonCenter{
+	margin:50px;
+	display: flex;
+	align-items: center; 
+	justify-content: center;
+}  
+/* Creating a New Exam field & Button ADD */
+.fieldSizeName0{
+	width:210px; 
+	height:20px
+}
+.signButton1{
+	text-align:center;
+	font-size:13px;
+	padding: 4px 20px;
+}
+/* Creating questions form field size */
+.fieldSizeName{
+	width:25vw; 
+	height:3vh;	
+}
+.fieldSizeQuestion{
+	width:65vw; 
+	height:7vh;
+}
+.fieldSizeAlternative{
+	width:65vw; 
+	height:4vh	
+}
+.fieldSizeAnswer{
+	width:65vw; 
+	height:4vh	
+}
+.addButton1{
+	text-align:center;
+	font-size:13px;
+	padding: 8px 110px;
+}
+
+  
+
+
+
+
+
+
+
+/***** ADMINISTRATOR *****/
+/* Admin Login Page */
+.entirePageAdmin{
+  position:fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background-color:rgb(75,110,120);
+
+}
+.formCenter4{
+	display: flex; 
+	flex-direction: column;
+	align-items: center; 
+	justify-content: center; 
+	margin-top:28px;
+	margin-right:85px;
+}
+/* ADMIN Hub */
+.entirePageMainADM{
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background-image: url('../images/admin0.png');
+  background-repeat: no-repeat;
+  background-size: cover
+}
+.container {
+  display: flex;
+  width: 100%;
+  height:100vh;
+}
+.left-section, .center-section, .right-section {
+  width: 33.33%;
+  display: flex;
+  justify-content: center;
+  background-color:rgb(165,187,196);
+  padding: 10px;
+  border-radius: 10px;
+  cursor: pointer;
+}
+.clickable-div:hover  {
+  background-color: rgb(185,190,195);
+}
+.smallContainer {
+  display: flex;
+  width: 100%;
+  height:35px;
+  font-size:15px;
+}
+.active2{
+	background-color:white;
+}
+.textADMHub{
+	text-align:center;
+	font-size:30px;
+	font-family:system-ui;
+	display:flex;
+	justify-content:center;
+	align-items:center;
+}
+/* Update Users table width */
+.table-data {
+  width: 125px;
+  text-align: center;
+}
+.buttonSaveQuestions{
+	font-size:13px;
+	padding: 8px 110px; 
+	text-align: center;
+	justify-content: center; 
+}
+.buttonSaveUsers{
+	font-size:13px;
+	padding: 5px 110px;
+	text-align:center;
+	justify-content: center; 
+}
+.buttonSaveGrades{
+	font-size:13px;
+	padding: 5px 110px; 
+ 	text-align:center;
+	justify-content: center;  
+}
+/* Edit Grade Form */
+.formCenter5{
+	display: flex; 
+	flex-direction: column;
+	align-items: center; 
+	justify-content: center; 
+	text-align: center;
+}
+.GoBackButton { 
+  margin-top:35px;
+  margin-left:15px;
+}
+.GoBackButton button{
+	padding:7px 13px;
+	font-size:15px;
+}
+
+/* EDIT GRADES DROP DOWN MENU */
+.select {
+    height: 25px; 
+    overflow-y: scroll; 
+}
+.dropdown-menu {
+  max-height: 20px !important; 
+  overflow-y: auto; 
+}
+/* Edit Exam/question Form */
+.formCenter6{
+	display: flex; 
+	flex-direction: column;
+	align-items: center; 
+	justify-content: center; 
+	text-align: center;
+}
+.examFormTitles{
+text-align:center;	
+}
+/* question field EDIT mode */
+.fieldSizeQuestionEDIT{
+	width:65vw; 
+	height:8vh;
+	margin:3px;
+	color: rgb(85,85,85);  
+	background-color:rgb(219,215,210); 
+	font-size:14px;
+	font-style: italic;
+}
+.fieldSizeAlternativeEDIT{
+	width:65vw; 
+	height:5vh;
+	margin:3px;
+	color: white;  
+	background-color:Grey; 
+	font-size:14px;
+	font-style: italic;	
+}
+.fieldSizeAnswerEDIT{
+	width:65vw; 
+	height:5vh;
+	margin:3px;
+	color: white;  
+	background-color:Grey; 
+	font-size:14px;
+	font-style: italic;
+}
+/*---------------------------------------------------------------------------------------------*/
+.editForm {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+ form.editForm {
+  width: 450px;
+  padding: 20px;
+  border: 2px solid #ccc;
+  border-radius: 10px;
+} 
+
+label.editForm, input.editForm {
+  display: block;
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  margin-bottom: 20px;
+}
+label.editForm {
+  margin-bottom: 10px;
+}
+.formRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+/*---------------------------------------------------------------------------------------------*/
+.editForm2 {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.form.editForm2 {
+  width: 480px;
+  padding: 22px;
+  border: 2px solid #ccc;
+  border-radius: 10px;
+} 
+.input.editForm2 {
+  display: block;
+  width: 100%;
+  padding: 500px;
+  font-size: 80px; 
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  margin-bottom: 20px;
+}
+.formRow input {
+  font-size: 15px;
+  width:180px;
+
+}
+
+
+
+
+
+
+/***** General *****/
+
+body {
+	font-family:arial,serif;
+}
+h1, h2, h3, h4  {
+  color: white;
+}
+.centerJustify {
+	text-align:center;
+}
+.leftJustify {
+	text-align:left;
+}
+.rightJustify {
+	text-align: right;
+}
+.left-right {
+	display: flex;
+ 	justify-content: space-between;
+}
+.viewExLink{
+	text-align:center;
+}
+table {
+  border-collapse: collapse;
+  vertical-align: middle;
+}
+th, td {
+  border: 1px solid black; 
+  padding: 2px;
+}
