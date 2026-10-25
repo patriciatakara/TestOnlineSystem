@@ -5,6 +5,12 @@ A Java web application for managing online exams, questions, student grades, and
 
 The application is organized into Java packages, JSP pages, and service classes. The controllers handle user requests, the service classes perform application operations, and the JSP pages provide the user interface.
 
+<p align="center">
+  <img src="TestOnlineImages/MVCpattern.jpg" alt="Architecture1" width="600">
+  <br>
+  <em>MVC Pattern</em>
+</p>
+
 ## Features
 Administrator
 -Add, edit, and delete user accounts.
@@ -38,20 +44,38 @@ Student
 
 ## Project Structure
 <p align="center">
-  <img src="TestOnlineImages/MVCpattern.jpg" alt="Architecture1" width="600">
+  <img src="TestOnlineImages/Final_DFD01.jpeg" alt="Architecture1" width="600">
   <br>
-  <em>MVC Pattern</em>
+  <em>DFD 01 - Main Flow</em>
 </p>
 
-<img src="TestOnlineImages/Three-tier _SystemArchitecture.png" alt="Architecture1" width="600">
+<p align="center">
+  <img src="TestOnlineImages/Final_DFD2_Process3.jpeg" alt="Architecture1" width="600">
+  <br>
+  <em>DFD 02 - Students Flow</em>
+</p>
 
-<img src="TestOnlineImages/Final_DFD01.jpeg" alt="Architecture1" width="600">
-<img src="TestOnlineImages/Final_DFD2_Process3.jpeg" alt="Architecture1" width="600">
-<img src="TestOnlineImages/Final_DFD2_Process4.jpeg" alt="Architecture1" width="600">
-<img src="TestOnlineImages/Final_DFD2_Process5.jpeg" alt="Architecture1" width="600">
 
+<p align="center">
+  <img src="TestOnlineImages/Final_DFD2_Process4.jpeg" alt="Architecture1" width="600">
+  <br>
+  <em>DFD 03 - Faculty Flow</em>
+</p>
+
+
+<p align="center">
+  <img src="TestOnlineImages/Final_DFD2_Process5.jpeg" alt="Architecture1" width="600">
+  <br>
+  <em>DFD 04 - Administrator Flow </em>
+</p>
 
 ## How the Technologies work together:
+<p align="center">
+  <img src="TestOnlineImages/Three-tier _SystemArchitecture.png" alt="Architecture1" width="600">
+  <br>
+  <em>System Architecture</em>
+</p>
+
 1. Java — Application Logic
 Implements core functionality, input validation, grade calculations, and database operations. Code is organized into bean, controller, model, and serviceClasses packages.
 
