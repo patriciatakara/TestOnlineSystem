@@ -37,11 +37,11 @@ Student
 - **Git and GitHub** — For version control and host the project repository.
 
 ## Project Structure
-<img src="TestOnlineImages/MVCpattern.jpeg" alt="Architecture1" width="600">
-<br>
+<img src="TestOnlineImages/MVCpattern.jpg" alt="Architecture1" width="600">
 <em>MVC Patter</em>
+<br>
 
-<img src="TestOnlineImages/Three-tier _SystemArchitecture.jpeg" alt="Architecture1" width="600">
+<img src="TestOnlineImages/Three-tier _SystemArchitecture.png" alt="Architecture1" width="600">
 
 <img src="TestOnlineImages/Final_DFD01.jpeg" alt="Architecture1" width="600">
 <img src="TestOnlineImages/Final_DFD2_Process 3.jpeg" alt="Architecture1" width="600">
