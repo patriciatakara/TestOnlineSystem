@@ -12,22 +12,11 @@ The application is organized into Java packages, JSP pages, and service classes.
 </p>
 
 ## Features
-Administrator
--Add, edit, and delete user accounts.
--Create and manage exams.
--View and manage exam grades.
--Manage examination-related information.
+- Administrator: Create, edit, and delete user accounts; create and manage exams; view and update exam grades; and manage examination-related information.
 
-Faculty
--Create exams and manage exam questions.
--View available exams.
--Review student grades.
+- Faculty: Create exams, manage exam questions, view available exams, and review student grades.
 
-Student
--Register and log in.
--View available exams.
--Take online assessments.
--View assessment results and student reports.
+- Students: Register and log in to the system, view available exams, take online assessments, and view exam results and student reports.
 
 ## Technology stack
 - **Apache Maven (3.9.1.6)** — Manage dependencies and build the applicaton into a WAR file. 
@@ -55,13 +44,11 @@ Student
   <em>DFD 02 - Students Flow</em>
 </p>
 
-
 <p align="center">
   <img src="TestOnlineImages/Final_DFD2_Process4.jpeg" alt="Architecture1" width="600">
   <br>
   <em>DFD 03 - Faculty Flow</em>
 </p>
-
 
 <p align="center">
   <img src="TestOnlineImages/Final_DFD2_Process5.jpeg" alt="Architecture1" width="600">
@@ -113,15 +100,12 @@ DB_PASSWORD=your_database_password
 
 Set these variables in the environment where Tomcat runs. If using Docker, you can pass them to the container through a local environment file.
 
-**Security:** Do not commit `.env` files, real database credentials, or other secrets to GitHub.
-
 The database connection URL currently used by the application is:
 jdbc:oracle:thin:@//oracle:1521/FREEPDB1
 
 Make sure the database hostname matches your Docker network configuration.
 
 ## Build the Project
-
 From the project root, run:
 
 ```bash
