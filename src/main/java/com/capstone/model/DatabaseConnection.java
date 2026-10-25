@@ -18,8 +18,8 @@ public class DatabaseConnection {
 	public static Connection getConnection() throws SQLException, ClassNotFoundException {
 		String driver = "oracle.jdbc.driver.OracleDriver";
 	    String dbURL = "jdbc:oracle:thin:@//oracle:1521/FREEPDB1";
-	    String username = System.getenv("DB_username");
-	    String password = System.getenv("DB_password");
+	    String username = System.getenv("DB_username"); // Get username from an environment variable.(.env)
+	    String password = System.getenv("DB_password"); // Get password from an environment variable.(.env)
 
 	    Class.forName(driver);
 	    Connection connection = DriverManager.getConnection(dbURL, username, password);
