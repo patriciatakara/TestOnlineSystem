@@ -37,10 +37,16 @@ Student
 - **Git and GitHub** — For version control and host the project repository.
 
 ## Project Structure
-![Database Diagram](TestOnlineImages/Final_DFD01.jpeg)
+<img src="TestOnlineImages/MVCpattern.jpeg" alt="Architecture1" width="600">
+<br>
+<em>MVC Patter</em>
 
+<img src="TestOnlineImages/Three-tier _SystemArchitecture.jpeg" alt="Architecture1" width="600">
 
 <img src="TestOnlineImages/Final_DFD01.jpeg" alt="Architecture1" width="600">
+<img src="TestOnlineImages/Final_DFD2_Process 3.jpeg" alt="Architecture1" width="600">
+<img src="TestOnlineImages/Final_DFD2_Process 4.jpeg" alt="Architecture1" width="600">
+<img src="TestOnlineImages/Final_DFD2_Process 5.jpeg" alt="Architecture1" width="600">
 
 
 ## How the Technologies work together:
