@@ -33,10 +33,10 @@ This is the login page for administrators to access the application system.
 	<div class="editForm2" style="padding:45px">
 	<form id=editForm  method = "post" action="${pageContext.request.contextPath}/AdminLogin">	
 		<div class="formRow">	
-			 <input  type="email" name="admemail" placeholder= "Enter your email">
+			 <input  type="email" name="admemail" placeholder= "Enter your email" required>
 		</div>	
 		<div class="formRow"> 		
-		 	<input type="password" name="admpassword" placeholder= "Enter your password">
+		 	<input type="password" name="admpassword" placeholder= "Enter your password" required>
 		</div>	
 		<input class="signButton" type="submit" value="Sign In">
 	</form>

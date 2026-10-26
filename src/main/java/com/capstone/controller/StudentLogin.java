@@ -33,7 +33,7 @@ public class StudentLogin extends HttpServlet {
 			} else {
 				HttpSession session = request.getSession(); 
 				session.setAttribute("getAlert", "Yes");
-				response.sendRedirect(request.getContextPath() +"jsp/Forms/StudentLoginForm.jsp");
+				response.sendRedirect(request.getContextPath() +"/jsp/Forms/StudentLoginForm.jsp");
 			}	 
 		} catch (Exception e) {
 			e.printStackTrace();

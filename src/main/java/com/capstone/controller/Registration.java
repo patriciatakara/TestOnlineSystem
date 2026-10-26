@@ -27,8 +27,38 @@ public class Registration extends HttpServlet {
 		String last = request.getParameter("last");
 		String email = request.getParameter("email");
 		String password = request.getParameter("password");
-		RegisterBean newStudent = new RegisterBean(first, last, email, password);
 			
+		// Check if fields are empty
+		if(first ==null || first.trim().isEmpty()
+		|| last ==null || last.trim().isEmpty()
+		|| email ==null || email.trim().isEmpty()
+		|| password ==null || password.trim().isEmpty()){
+			
+			HttpSession session = request.getSession();
+    	session.setAttribute("nullForm", "Yes");
+
+			response.sendRedirect(request.getContextPath() + "/jsp/Forms/RegistrationForm.jsp");
+			return;
+		}
+
+
+		// // Validate password
+		// if (password.length() < 5 || !password.matches(".*[^a-zA-Z0-9].*")) {
+
+		// 	HttpSession session = request.getSession();
+		// 	session.setAttribute("passwordError", "Yes");
+
+		// 	response.sendRedirect(
+		// 			request.getContextPath() + "/jsp/Forms/RegistrationForm.jsp"
+		// 	);
+		// 	return;
+		// }
+
+
+
+
+		RegisterBean newStudent = new RegisterBean(first, last, email, password);
+
 		try {
 			RegistrationService registrationService = new RegistrationService();
 
@@ -36,18 +66,19 @@ public class Registration extends HttpServlet {
 				HttpSession session = request.getSession();
 				session.setAttribute("getAlert", "Yes");
 				response.sendRedirect(request.getContextPath() + "/jsp/Forms/RegistrationForm.jsp");
+				return;
+			}
+			
+			if (RegistrationService.addUser(newStudent, userTable)) {
+				response.sendRedirect(request.getContextPath() + "/jsp/Students/RegisteredSuccess.jsp");
 			} else {
-				
-				if (RegistrationService.addUser(newStudent, userTable)) {
-					response.sendRedirect(request.getContextPath() + "/jsp/Students/RegisteredSuccess.jsp");
-				} else {
-					HttpSession session = request.getSession();
-					session.setAttribute("nullForm", "Yes");
-					response.sendRedirect(request.getContextPath() + "/jsp/Forms/RegistrationForm.jsp");
-				}
+				HttpSession session = request.getSession();
+				session.setAttribute("nullForm", "Yes");
+				response.sendRedirect(request.getContextPath() + "/jsp/Forms/RegistrationForm.jsp");
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
-		}	
+			response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "An error occurred during registration");
+		}
 	}
 }

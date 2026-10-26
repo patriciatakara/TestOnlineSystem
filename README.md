@@ -3,7 +3,11 @@
 ## Overview
 A Java web application for managing online exams, questions, student grades, and user accounts. The system provides separate interfaces for administrators, faculty members, and students.
 
-The application is organized into Java packages, JSP pages, and service classes. The controllers handle user requests, the service classes perform application operations, and the JSP pages provide the user interface.
+The examination management system uses a traditional Java server-side web architecture built around Java Servlets, JSP, and an MVC-style separation of responsibilities
+
+Java Servlets act as controllers, receiving HTTP requests from the browser and coordinating application actions. Each controller handles specific operations, such as user login, registration, exam management, and grade updates.
+
+Servlets process requests using methods such as doGet(), which handles requests to retrieve a page or information  and doPost(), which handles submitted forms, such as login, registration, or grade updates.
 
 <p align="center">
   <img src="TestOnlineImages/MVCpattern.jpg" alt="Architecture1" width="600">

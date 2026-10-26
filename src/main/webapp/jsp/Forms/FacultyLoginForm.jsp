@@ -33,10 +33,10 @@ This is the login page for faculty members to access the application system.
 	<div class="editForm2" style="padding:45px">
 	<form method = "post" action="${pageContext.request.contextPath}/FacultyLogin">
 		<div class="formRow">	
-			 <input  type="email" name="facemail" placeholder= "Enter your email">
+			 <input  type="email" name="facemail" placeholder= "Enter your email" required>
 		</div>	
 		<div class="formRow"> 		
-		 	<input type="password" name="facpassword" placeholder= "Enter your password">
+		 	<input type="password" name="facpassword" placeholder= "Enter your password" required>
 		</div>	
 		<input class="signButton" type="submit" value="Sign In">
 	</form>

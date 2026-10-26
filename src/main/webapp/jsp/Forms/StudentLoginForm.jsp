@@ -33,10 +33,10 @@ This is the login page for students to access the application system.
 	<div class="editForm2" style="padding:45px">
 	<form method = "post" action="${pageContext.request.contextPath}/StudentLogin"  >
 		<div class="formRow">	
-			 <input  type="email" name="email" placeholder= "Enter your email">
+			 <input  type="email" name="email" placeholder= "Enter your email" required>
 		</div>	
 		<div class="formRow"> 		
-		 	<input type="password" name="password" placeholder= "Enter your password">
+		 	<input type="password" name="password" placeholder= "Enter your password" required>
 	</div>	
 		<input class="signButton" type="submit" value="Sign In">
 	</form>
