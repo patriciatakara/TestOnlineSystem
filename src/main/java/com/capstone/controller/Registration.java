@@ -41,22 +41,6 @@ public class Registration extends HttpServlet {
 			return;
 		}
 
-
-		// // Validate password
-		// if (password.length() < 5 || !password.matches(".*[^a-zA-Z0-9].*")) {
-
-		// 	HttpSession session = request.getSession();
-		// 	session.setAttribute("passwordError", "Yes");
-
-		// 	response.sendRedirect(
-		// 			request.getContextPath() + "/jsp/Forms/RegistrationForm.jsp"
-		// 	);
-		// 	return;
-		// }
-
-
-
-
 		RegisterBean newStudent = new RegisterBean(first, last, email, password);
 
 		try {
