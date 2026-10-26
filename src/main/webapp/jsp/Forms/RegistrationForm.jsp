@@ -71,14 +71,6 @@ This is the registration page for students to register and have access to the ap
 			<c:remove var="nullForm" scope="session" />
 	</c:if>
 
-	<!-- Alert message: in case password does not meet requirements.
-	<c:if test="${sessionScope.passwordError == 'Yes'}">
-			<script type="text/javascript">
-					alert("Password must have at least 5 characters and 1 special character.");
-			</script>
-			<c:remove var="passwordError" scope="session" />
-	</c:if> -->
-
 	</div>
 
 	<script>

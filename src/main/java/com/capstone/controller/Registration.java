@@ -2,7 +2,6 @@ package com.capstone.controller;
 import java.io.IOException;
 import com.capstone.bean.RegisterBean;
 import com.capstone.serviceClasses.RegistrationService;
-
 import javax.servlet.*;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.*;
@@ -17,9 +16,9 @@ import javax.servlet.http.*;
  */
 @WebServlet(name = "registration", urlPatterns = { "/registration" })
 public class Registration extends HttpServlet {
-	private static final long serialVersionUID = 1L;
-    
 	
+	private static final long serialVersionUID = 1L;
+  
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		String userTable = "STUDENTS";
@@ -40,7 +39,7 @@ public class Registration extends HttpServlet {
 			response.sendRedirect(request.getContextPath() + "/jsp/Forms/RegistrationForm.jsp");
 			return;
 		}
-
+		
 		RegisterBean newStudent = new RegisterBean(first, last, email, password);
 
 		try {
@@ -60,6 +59,7 @@ public class Registration extends HttpServlet {
 				session.setAttribute("nullForm", "Yes");
 				response.sendRedirect(request.getContextPath() + "/jsp/Forms/RegistrationForm.jsp");
 			}
+
 		} catch (Exception e) {
 			e.printStackTrace();
 			response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "An error occurred during registration");
