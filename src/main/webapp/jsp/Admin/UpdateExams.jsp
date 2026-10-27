@@ -12,7 +12,6 @@ with the buttons 'edit' and 'delete'. A button to create a new exam is also impl
 <head>
 	<meta charset="UTF-8">
 	<link rel ="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/mycss.css">
-	<script src="${pageContext.request.contextPath}/javaScriptADM.js"></script>
 	<title>Update Exams</title>
 </head>
 
@@ -143,6 +142,11 @@ if (session.getAttribute("email")==null) {
 response.sendRedirect("${pageContext.request.contextPath}/jsp/Forms/AdminLoginForm.jsp");
 }
 %>  
+
+  <script>
+    const contextPath = "${pageContext.request.contextPath}";
+  </script>
+  <script src="${pageContext.request.contextPath}/javaScriptADM.js"></script>
 
 </body>
 </html>

@@ -11,7 +11,6 @@ This page displays the drop-down menu to select an exam and the button Create Ne
 <head>
 	<meta charset="UTF-8">
 	<link rel ="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/mycss.css">
-
 	<title>Update Exams DropDown</title>
 </head>
 

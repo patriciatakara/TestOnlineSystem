@@ -11,7 +11,6 @@ This page displays the drop-down menu to select an exam's grade list.
 <head>
 	<meta charset="UTF-8">
 	<link rel ="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/mycss.css">
-
 	<title>Update Grades DropDown</title>
 </head>
 

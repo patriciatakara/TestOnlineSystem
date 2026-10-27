@@ -11,7 +11,6 @@ This page displays all the existing exams on the database and "Delete" buttons f
 <head>
 	<meta charset="UTF-8">
 	<link rel ="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/mycss.css">
-	<script src="javaScriptADM.js"></script>
 	<title>Delete Exams</title>
 </head>
 
@@ -86,6 +85,13 @@ if (session.getAttribute("email")==null) {
 response.sendRedirect("${pageContext.request.contextPath}/jsp/Forms/AdminLoginForm.jsp");
 }
 %>  
+
+
+  <script>
+    const contextPath = "${pageContext.request.contextPath}";
+  </script>
+  <script src="${pageContext.request.contextPath}/javaScriptADM.js"></script>
+
 
 </body>
 </html>
