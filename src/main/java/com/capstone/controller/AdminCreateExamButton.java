@@ -1,7 +1,6 @@
 package com.capstone.controller;
 import java.io.IOException;
 import java.sql.SQLException;
-
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -18,39 +17,35 @@ import com.capstone.serviceClasses.NewExamService;
  */
 @WebServlet("/AdminCreateExamButton")
 public class AdminCreateExamButton extends HttpServlet {
+	
 	private static final long serialVersionUID = 1L;
     
-	
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-	
+
 		String newExamName = request.getParameter("examName");
 		NewExamService newExamService = new NewExamService();
-		int updateCount = 0;
-		
+		HttpSession session = request.getSession();
+
 		try {
-			if (newExamService.checkExamName(newExamName) >0) {
-				HttpSession session = request.getSession(); 
-				session.setAttribute("getAlert1","Yes");
-				response.sendRedirect(request.getContextPath() + "/jsp/Admin/NewExamForm.jsp");
-			}else {
-				 try {
-					updateCount = newExamService.createNewTable(newExamName);
-					
-					if (updateCount == 0) {
-			            HttpSession session = request.getSession();
-			            session.setAttribute("getAlert2", "Yes");
-			            response.sendRedirect(request.getContextPath() + "/jsp/Admin/NewExamForm.jsp");
-			        } else {
-			        	HttpSession session = request.getSession();
-				        session.setAttribute("getAlert3", "Yes");
-			            response.sendRedirect(request.getContextPath() + "/jsp/Admin/NewExamForm.jsp");
-			        }	
-				} catch (ClassNotFoundException e) {
-					e.printStackTrace();
-				}		 
-			}		
-		} catch (SQLException e) {
+			if (newExamName == null || newExamName.trim().isEmpty()) {
+				session.setAttribute("getAlert2", "Yes");
+			} else if (newExamService.checkExamName(newExamName) > 0) {
+				session.setAttribute("getAlert1", "Yes");
+			} else {
+				int updateCount = newExamService.createNewTable(newExamName);
+
+				if (updateCount == 0) {
+					session.setAttribute("getAlert2", "Yes");
+				} else {
+					session.setAttribute("getAlert3", "Yes");
+				}
+			}
+		} catch (SQLException | ClassNotFoundException e) {
 			e.printStackTrace();
+			throw new ServletException("Error creating the exam.", e);
 		}
-	}
+
+		response.sendRedirect(
+		request.getContextPath() + "/jsp/Admin/NewExamForm.jsp");
+		}
 }
