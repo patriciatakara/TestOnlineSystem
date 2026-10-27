@@ -1,16 +1,14 @@
 package com.capstone.serviceClasses;
-import java.sql.CallableStatement;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
 import java.sql.SQLException;
-import java.sql.Types;
-
-import com.capstone.model.DatabaseConnection;
+import com.capstone.model.DeleteDAO;
 /**
  * @author Patricia Takara
  */
 public class DeleteService {
 	
+	  // Create an object to access deletion database operations.
+    private final DeleteDAO deleteDAO = new DeleteDAO();
+
 	/**
 	 * This method deletes a user from the database. It then checks whether the table name is "FACULTY" or 
 	 * "USER_REGISTRATION"(students) to use the proper column ID in the SQL query. 
@@ -21,37 +19,8 @@ public class DeleteService {
 	 * @throws ClassNotFoundException for when DatabaseConnection.getConnection() method is unable to load the JDBC driver for the database.
 	 */
 	public void deleteUser(String tableName, String id) throws SQLException, ClassNotFoundException {
-		Connection connection = null;
-		PreparedStatement statement = null;
-		String columnId;
-		
-		if(tableName.equals("FACULTY")) {
-			columnId = "FACULTYID";
-		}else {
-			columnId = "USERID";
-		}
-		
-		try {
-			connection = DatabaseConnection.getConnection();
-			String sql = "delete from " + tableName + " where " + columnId + "= ?";
-			statement = connection.prepareStatement(sql);
-			statement.setString(1, id);
-			statement.executeUpdate();
-		} catch (SQLException e) {
-	        e.printStackTrace();
-	        throw e;
-		} catch (ClassNotFoundException e) {
-	        e.printStackTrace();
-	        throw e;
-	        
-		} finally {
-			if (statement != null) {
-				statement.close();
-			}
-			if (connection != null) {
-				connection.close();
-			}
-		}
+		// Delegate the deletion to the DAO.
+  	deleteDAO.deleteUser(tableName, id);
 	}
 		
 	
@@ -63,30 +32,8 @@ public class DeleteService {
 	 * @throws ClassNotFoundException for when DatabaseConnection.getConnection() method is unable to load the JDBC driver for the database.
 	 */
 	public void deleteQuestion(String tableName, String id) throws SQLException, ClassNotFoundException {
-		Connection connection = null;
-		PreparedStatement statement = null;
-	
-		try {
-			connection = DatabaseConnection.getConnection();
-			String sql = "delete from " + tableName + " where QID = ?";
-			statement = connection.prepareStatement(sql);
-			statement.setString(1, id);
-			statement.executeUpdate();
-		 } catch (SQLException e) {
-		    e.printStackTrace();
-		    throw e;
-		 } catch (ClassNotFoundException e) {
-		    e.printStackTrace();
-		    throw e;
-		        
-		} finally {
-			if (statement != null) {
-				statement.close();
-			}
-			if (connection != null) {
-				connection.close();
-			}
-		}
+		// Delegate the deletion to the DAO.
+    deleteDAO.deleteQuestion(tableName, id);
 	}		
 		
 	
@@ -98,30 +45,8 @@ public class DeleteService {
 	 * @throws ClassNotFoundException for when DatabaseConnection.getConnection() method is unable to load the JDBC driver for the database.
 	 */
 	public void deleteGrade(String tableName, String id) throws SQLException, ClassNotFoundException {
-		Connection connection = null;
-		PreparedStatement statement = null;
-	
-		try {
-			connection = DatabaseConnection.getConnection();
-			String sql = "delete from " + tableName + " where USERID =?";
-			statement = connection.prepareStatement(sql);
-			statement.setString(1, id);
-			statement.executeUpdate();
-		} catch (SQLException e) {
-	        e.printStackTrace();
-	        throw e;
-		} catch (ClassNotFoundException e) {
-	        e.printStackTrace();
-	        throw e;
-	        
-		} finally {
-			if (statement != null) {
-				statement.close();
-			}
-			if (connection != null) {
-				connection.close();
-			}
-		}
+    // Delegate the deletion to the DAO.
+    deleteDAO.deleteGrade(tableName, id);
 	}
 	
 	
@@ -133,30 +58,14 @@ public class DeleteService {
 	 * @throws ClassNotFoundException for when DatabaseConnection.getConnection() method is unable to load the JDBC driver for the database.
 	 */
 	public boolean deleteExam(String exam) throws SQLException, ClassNotFoundException {
-		
-		Connection connection = null;
-		String tableName = exam;
-		boolean success = false;
-
 		try {
-	        connection = DatabaseConnection.getConnection();
-	        CallableStatement cs = connection.prepareCall("{  call SP_DELETETABLE(?, ?)  }");
-	        cs.setString(1, tableName);
-	        cs.registerOutParameter(2, Types.NUMERIC);
-	        cs.execute();
-	        success = cs.getInt(2) == 1;
-	        cs.close();
-	        
-	    }catch (SQLException e) {
-            e.printStackTrace();
-            success = false;
-         
-	    }finally {
-	        if (connection != null) {
-	            connection.close();
-	        }
-	    }
-	    return success;
+			// Delegate the deletion to the DAO and return its result.
+			return deleteDAO.deleteExam(exam);
+		} catch (SQLException e) {
+			// Preserve the original behavior by returning false on SQL errors.
+			e.printStackTrace();
+			return false;
 	}
-	
+	}
+
 }

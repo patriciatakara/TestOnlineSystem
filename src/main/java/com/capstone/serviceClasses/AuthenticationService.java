@@ -1,15 +1,14 @@
 package com.capstone.serviceClasses;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
+import com.capstone.model.AuthenticationDAO;
 
-import com.capstone.model.DatabaseConnection;
 /**
- * @author Patricia Takara
+ *  Handles user authentication.
  */
 public class AuthenticationService {
 	
+  private final AuthenticationDAO authenticationDAO = new AuthenticationDAO();
+
 	/**
 	 * This method authenticates a user by checking if the provided email and password exist in the database. 
 	 * The method takes three parameters.
@@ -19,38 +18,15 @@ public class AuthenticationService {
 	 * @return a boolean value. If the authentication is successful it returns true, otherwise, it returns false.
 	 * @throws SQLException for errors occurring while accessing the database.
 	 */
-	public boolean authenticate(String email, String password, String table) throws Exception, SQLException {
+	public boolean authenticate(String email, String password, String table) throws SQLException, ClassNotFoundException {
+
+  	// Check that the email and password were provided.
+  	if (email == null || email.trim().isEmpty() || password == null || password.isEmpty()) {
+      return false;
+    }
+
+		// Calls the DAO method to authenticate the user, removing any leading or trailing spaces from the email before passing the credentials and table name.
+		return authenticationDAO.authenticate(email.trim(), password, table);
+    }
 		
-		Connection connection = null;
-		PreparedStatement statement = null;
-		ResultSet resultSet = null;
-		
-		try {
-			connection = DatabaseConnection.getConnection();
-			String sql = "select * from "+ table +" where EMAIL=? and PASSWORD=?";
-		    statement = connection.prepareStatement(sql);
-			statement.setString(1, email.toUpperCase());
-			statement.setString(2, password);
-			resultSet = statement.executeQuery();
-		
-			if(resultSet.next()) {
-				return true;
-			}	
-		} catch (SQLException e) {
-	        e.printStackTrace();
-	        throw e;
-		} catch (ClassNotFoundException e) {
-	        e.printStackTrace();
-	        throw e;
-	        
-		} finally {
-			if (statement != null) {
-				statement.close();
-			}
-			if (connection != null) {
-				connection.close();
-			}
-		}	
-		return false;
-	}
 }

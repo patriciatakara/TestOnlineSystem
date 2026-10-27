@@ -3,6 +3,9 @@ import java.sql.SQLException;
 import com.capstone.bean.RegisterBean;
 import com.capstone.model.RegistrationDAO;
 
+/**
+ * Provides registration operations for students and faculty members.
+ */
 public class RegistrationService {
 	
 	private static final RegistrationDAO registrationDAO = new RegistrationDAO();
@@ -17,7 +20,10 @@ public class RegistrationService {
 	 */
 	public Boolean checkExistUser(String email, String table) throws SQLException, ClassNotFoundException{
 		
-		validateTable(table);
+		// Validate the target table before attempting registration.
+		// if table is invalid, it throws an exception and let the user know. The next statements are skipped.
+		TableValidationService.validateUsersTables(table);
+
 		if (email == null || email.trim().isEmpty()) {
 			return false;
 		}
@@ -35,7 +41,7 @@ public class RegistrationService {
 
 		// Validate the target table before attempting registration.
 		// if table is invalid, it throws an exception and let the user know. The next statements are skipped.
-		validateTable(table);
+		TableValidationService.validateUsersTables(table);
 
 		// Check whether the user object is null before accessing its data.
 		if (user == null) {
@@ -44,20 +50,8 @@ public class RegistrationService {
 		}
 
 		// Convert the table name to uppercase and call the DAO.
-    // to insert the user's information into the database.
+    // Insert the user's information into the database.
 		return registrationDAO.addUser(user, table.toUpperCase());
-	}
-
-
-	/**
-	 * Validates whether a table is not in the database. It raises an error.
-	 * @param table the user table name to validate
-	 * @throws SQLException if the table name is null or unsupported
-	 */
-	private static void validateTable(String table) throws SQLException {
-		if (table == null || (!"STUDENTS".equalsIgnoreCase(table) && !"FACULTY".equalsIgnoreCase(table))) {
-		throw new SQLException("Invalid user table: " + table);
-		}
 	}
 	
 }
