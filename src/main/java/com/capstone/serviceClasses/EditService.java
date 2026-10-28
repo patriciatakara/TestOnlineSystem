@@ -1,322 +1,180 @@
 package com.capstone.serviceClasses;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 import com.capstone.bean.NewExamBean;
 import com.capstone.bean.RegisterBean;
-import com.capstone.model.DatabaseConnection;
-/** 
- * @author Patricia Takara
+import com.capstone.model.EditDAO;
+
+/**
+ * Handles business logic for editing users, exam questions, and grades.
+ * The service retrieves existing information, determines which values.
+ * should be updated, and delegates database operations to EditDAO.
  */
 public class EditService {
 	
+	private final EditDAO editDAO = new EditDAO();
+	
 	/**
-	 * This method updates a user's information in the database based on their userID.
-	 * @param user is a RegisterBean object which contains the updated user information (first name, last name, email, and password).
-	 * @param table is the name of the database table to update the information.
-	 * @param userId is the ID of the user to be updated.
-	 * @return an integer value that indicates the number of rows that were updated in the database. The value will be greater than 0 if the update was successful, 
-	 * and 0 if it was not.
-	 * @throws SQLException for errors occurring while accessing the database.
+   * Checks whether a string is null, empty, or contains only whitespace.
+   * @param value the string to check.
+   * @return true if the string is null, empty, or contains only whitespace; otherwise, returns false.
+	*/
+	 private boolean isBlank(String value) {
+		return value == null || value.trim().isEmpty();
+	}
+
+
+	/**
+	 * Returns the submitted value if it is not blank. Otherwise, it keeps the existing value.
+	 * @param submitted the new value submitted by the user.
+   * @param existing the current value stored in the database.
+   * @return the submitted value if it is not blank; otherwise, returns the existing value.
 	 */
+	private String keepExistingIfBlank(String submitted, String existing) {
+		return isBlank(submitted) ? existing : submitted;
+	}
+
+
+	/**
+ 	 * Updates a user's information in the database. Blank fields retain their existing values.
+ 	 * @param user a RegisterBean containing the submitted user information.
+ 	 * @param table the database table containing the user.
+ 	 * @param userId the ID identifying the user to update.
+ 	 * @return the number of database rows updated.
+	 * @throws SQLException if a database operation fails.
+ 	 */
 	public int updateUser(RegisterBean user, String table, String userId) throws SQLException {
-
-	    String newFirst = user.getFirst();
-	    String newLast = user.getLast();
-	    String newEmail = user.getEmail();
-	    String newPassword = user.getPassword();
-	    String userID = userId;
-	    String tableName = table;
-	    String id;
-	    int rowsUpdated = 0;
-	    
-	        
-	    if(tableName.equals("FACULTY")) {
-	        id = "FACULTYID";
-	    } else {
-	        id = "USERID"; 
-	    } 
-	    
-		Connection connection = null;
-        PreparedStatement statement = null;
-        ResultSet resultSet = null;
-        
-        try {	
-			connection = DatabaseConnection.getConnection();
-			String sql1 = "select * from " + tableName + " where " + id + " = " + userID;
-			statement = connection.prepareStatement(sql1);
-			resultSet = statement.executeQuery();
-			resultSet.next();
-			
-			String oldFirst = resultSet.getString("FIRSTNAME");
-		    String oldLast = resultSet.getString("LASTNAME");
-		    String oldEmail = resultSet.getString("EMAIL");
-		    String oldPassword = resultSet.getString("PASSWORD");
-		    
-	        // Updates the retrieved data using the values submitted by the form.
-            if (newFirst.isEmpty()) {
-            	newFirst = oldFirst;
-            }
-            if (newLast.isEmpty()) {
-            	newLast = oldLast;
-            }
-            if (newEmail.isEmpty()) {
-            	newEmail = oldEmail;
-            }
-            if (newPassword.isEmpty()) {
-            	newPassword = oldPassword;
-            }
-
-        } catch (Exception e) {
-        	e.printStackTrace();
-	    
-        } finally {
-            if (statement != null) {
-                statement.close();
-            }
-            if (resultSet != null) {
-                resultSet.close();
-            }
-            if (connection != null) {
-                connection.close();
-            }
-        }	 
-           
-        
-	    try {
-	        connection = DatabaseConnection.getConnection();
-	        String sql2 = "update " + tableName + " set FIRSTNAME = ?, LASTNAME = ?, EMAIL =?, PASSWORD = ? where " + id + " = " + userID;
-	        statement = connection.prepareStatement(sql2);
-	        statement.setString(1, newFirst.toUpperCase());
-	        statement.setString(2, newLast.toUpperCase());
-	        statement.setString(3, newEmail.toUpperCase());
-	        statement.setString(4, newPassword.toUpperCase());
-	        rowsUpdated = statement.executeUpdate();      
-	        
-	    } catch (Exception e) {
-	    	e.printStackTrace();
-	    
-		} finally {
-			if (statement != null) {
-				statement.close();
-			}
-			if (connection != null) {
-				connection.close();
-			}
+		
+		// Checks whether the RegisterBean object itself is null.
+		if (user == null) {
+			throw new IllegalArgumentException("User information cannot be null.");
 		}
-	    return rowsUpdated;
+
+		// Retrieve the user's current information from the database.
+		// The DAO performs the database query using the table and user ID.
+		RegisterBean existingUser = editDAO.getUser(table, userId);
+		
+		// Create a bean to store the updated user information.
+		// that will be sent to the DAO for updating.
+		RegisterBean updatedUser = new RegisterBean();
+
+		// Uses the submitted first name if it is not blank.
+    // Otherwise, keeps the existing first name.
+		String first = keepExistingIfBlank(user.getFirst(), existingUser.getFirst());
+		
+    // Uses the submitted last name if it is not blank.
+    // Otherwise, keeps the existing last name.		
+		String last = keepExistingIfBlank(user.getLast(), existingUser.getLast());
+		
+		// Uses the submitted email if it is not blank.
+    // Otherwise, keeps the existing email.
+		String email = keepExistingIfBlank(user.getEmail(), existingUser.getEmail());
+		
+    // Uses the submitted password if it is not blank.
+    // Otherwise, keeps the existing password.
+		String password = keepExistingIfBlank(user.getPassword(), existingUser.getPassword());
+
+		// Convert the first name, last name, and email to uppercase.
+		updatedUser.setFirst(first.toUpperCase());
+		updatedUser.setLast(last.toUpperCase());
+		updatedUser.setEmail(email.toUpperCase());
+
+		// Stores the final password without changing its letter case.
+		// Passwords are generally case-sensitive.
+		updatedUser.setPassword(password);
+
+	  //  Sends the table name, user ID, and updated information to the DAO.
+    // The DAO executes the database UPDATE statement.
+    // Returns the number of rows updated by that statement.
+		return editDAO.updateUser(table, userId, updatedUser);
 	}
 
 	
-	
 	/**
-	 * This method updates a question of a specified table(exam) in the database based on the question ID (qid).
-	 * The method first retrieves the current values for the question and then compares them to the new values provided in the question object.
-	 * If a field in the question object is empty, the method retains the original value for that field.
-	 * @param table is the name of the table/exam.
-	 * @param qid is the question ID.
-	 * @param question is a NewExamBean object which contains the updated question information (question text, multiple choices, and correct answer).
-	 * @return the number of rows updated in the table as an integer. The value will be greater than 0 if the update was successful, 
-	 * and 0 if it was not.
-	 * @throws SQLException for errors occurring while accessing the database.
+	 * Updates a question in a specified exam table. Blank fields retain their existing values.
+	 * @param table the exam table containing the question
+	 * @param qid the ID identifying the question
+	 * @param question a NewExamBean containing the submitted question information
+	 * @return the number of database rows updated
+	 * @throws SQLException if a database operation fails
 	 */
 	public int updateQuestion(String table, String qid, NewExamBean question) throws SQLException {
-		int rowsUpdated = 0;
 		
-		String questionText = question.getQtext();
-	    String op1 = question.getOpt1();
-	    String op2 = question.getOpt2();
-	    String op3 = question.getOpt3();
-	    String op4 = question.getOpt4();
-	    String correctAnswer = question.getCorrectAnswer();
-	    String tableName = table;
-		
-	    Connection connection = null;
-		PreparedStatement statement = null;
-		ResultSet resultSet = null;	
-		
-		// Current values for the question are retrieved.
-		try {	
-			connection = DatabaseConnection.getConnection();
-			String sql = "select * from " + tableName + " where qid = ? ";
-			statement = connection.prepareStatement(sql);
-			statement.setString(1, qid);
-			resultSet = statement.executeQuery();
-			resultSet.next();
-			
-	        String oldQuestionText = resultSet.getString("QUESTION");
-	        String oldOp1 = resultSet.getString("OP1");
-	        String oldOp2 = resultSet.getString("OP2");
-	        String oldOp3 = resultSet.getString("OP3");
-	        String oldOp4 = resultSet.getString("OP4");
-	        String oldCorrectAnswer = resultSet.getString("CORRECTANS");
-	        
-	        // Updates the retrieved data using the values submitted by the form.
-            if (questionText.isEmpty()) {
-                questionText = oldQuestionText;
-            }
-            if (op1.isEmpty()) {
-                op1 = oldOp1;
-            }
-            if (op2.isEmpty()) {
-                op2 = oldOp2;
-            }
-            if (op3.isEmpty()) {
-                op3 = oldOp3;
-            }
-            if (op4.isEmpty()) {
-                op4 = oldOp4;
-            }
-            if (correctAnswer.isEmpty()) {
-                correctAnswer = oldCorrectAnswer;
-            }
-            
-		} catch (Exception e) {
-			e.printStackTrace();
-			
-		} finally {
-            if (statement != null) {
-                statement.close();
-            }
-            if (resultSet != null) {
-                resultSet.close();
-            }
-            if (connection != null) {
-                connection.close();
-            }
-        }	
+		// Checks whether the RegisterBean object itself is null.
+		if (question == null) {
+			throw new IllegalArgumentException("Question information cannot be null.");
+		}
 
-		
-		try {	
-			connection = DatabaseConnection.getConnection();    
-            String sql2 = "update " +  tableName + " set QUESTION = ?, OP1= ?, OP2 =?, OP3 = ?, OP4 = ?, CORRECTANS = ? where QID =? ";
-            statement = connection.prepareStatement(sql2);
-            statement.setString(1, questionText);
-			statement.setString(2, op1);
-			statement.setString(3, op2);
-			statement.setString(4, op3);
-		    statement.setString(5, op4);
-			statement.setString(6, correctAnswer);
-			statement.setString(7, qid);
-			rowsUpdated = statement.executeUpdate();
-			
-		} catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        } catch (SQLException e) {
-			e.printStackTrace();
-		
-        } finally {
-            if (statement != null) {
-                statement.close();
-            }
-            if (resultSet != null) {
-                resultSet.close();
-            }
-            if (connection != null) {
-                connection.close();
-            }
-        }	
-		return rowsUpdated;
+		// Retrieves the current question from the specified exam table.
+    // The DAO uses the table name and question ID to find it.
+		NewExamBean existingQuestion = editDAO.getQuestion(table, qid);
+
+		// Creates a new bean to hold the final question values
+    // that will be sent to the database.
+		NewExamBean updatedQuestion = new NewExamBean();
+
+		// Updates the question text if a nonblank value was submitted.
+    // Otherwise, keeps the existing question text.
+		updatedQuestion.setQtext(keepExistingIfBlank(question.getQtext(), existingQuestion.getQtext()));
+
+  	// Updates the first answer option if it is not blank.
+    // Otherwise, keeps the existing first option.
+		updatedQuestion.setOpt1(keepExistingIfBlank(question.getOpt1(), existingQuestion.getOpt1()));
+
+		// Updates the second answer option if it is not blank.
+    // Otherwise, keeps the existing second option.
+		updatedQuestion.setOpt2(keepExistingIfBlank(question.getOpt2(), existingQuestion.getOpt2()));
+
+    // Updates the third answer option if it is not blank.
+    // Otherwise, keeps the existing third option.
+		updatedQuestion.setOpt3(keepExistingIfBlank(question.getOpt3(), existingQuestion.getOpt3()));
+
+  	// Updates the fourth answer option if it is not blank.
+   	// Otherwise, keeps the existing fourth option.
+		updatedQuestion.setOpt4(keepExistingIfBlank(question.getOpt4(), existingQuestion.getOpt4()));
+
+    // Updates the correct answer if it is not blank.
+    // Otherwise, keeps the existing correct answer.
+		updatedQuestion.setCorrectAnswer(keepExistingIfBlank(question.getCorrectAnswer(),existingQuestion.getCorrectAnswer()));
+
+		// Sends the exam table, question ID, and final question values
+    // to the DAO, which performs the database UPDATE.
+    // Returns the number of rows updated.
+		return editDAO.updateQuestion(table, qid, updatedQuestion);
 }
 
-	
+
 	/**
-	 * This method updates a student's grade from a specified exam. The student ID is used to make this change.   
-	 * @param table is the table/exam's grade list containing the grades from all students that took the exam.
-	 * @param userId is the student ID used to identify the student having his grade changed.
-	 * @param first is the student first name.
-	 * @param last is the student last name.
-	 * @param grade is the student's grade.
-	 * @param letterGrade is the student's letter grade (A, B, C, D, E, F).
-	 * @param submission is the exam's submission date.
-	 * @return the number of rows updated in the table as an integer. The value will be greater than 0 if the update was successful, 
-	 * and 0 if it was not.
-	 * @throws SQLException SQLException for errors occurring while accessing the database.
+	 * Updates a student's grade for a specified exam.
+	 * @param table the exam grade table containing the student's grade
+	 * @param userId the ID identifying the student
+	 * @param first the student's first name
+	 * @param last the student's last name
+	 * @param grade the student's numeric grade
+	 * @param letterGrade the student's letter grade
+	 * @param submission the exam submission date
+	 * @return the number of database rows updated
+	 * @throws SQLException if a database operation fails
 	 */
 	public int updateGrade(String table, int userId, String first, String last, int grade, String letterGrade, String submission) throws SQLException {
-	    
-		int newUserId = userId;
-		String newFirst = first;
-		String newLast = last;
-	    int newGrade = grade;
-	    String newLetterGrade = letterGrade;
-	    String tableName = table;
-	    String newSubmissionDate = submission;
-	    
-		int rowsUpdated = 0;
-		Connection connection = null;
-	    PreparedStatement statement = null;
-	    ResultSet resultSet = null;
-	    
-	    try {	
-	    	connection = DatabaseConnection.getConnection();
-			String sql1 = "select USERID, FIRSTNAME, LASTNAME, GRADE, LETTER, SUBMISSION from STUDENTS natural join " + tableName + " where USERID = ? ";
-			statement = connection.prepareStatement(sql1);
-			statement.setInt(1, userId);
-			resultSet = statement.executeQuery();
-			resultSet.next();
-			
-	        int oldUserID = resultSet.getInt("USERID");
-	        String oldFirst= resultSet.getString("FIRSTNAME");
-	        String oldLast = resultSet.getString("LASTNAME");
-			String oldLetterGrade = resultSet.getString("LETTER");
-			String oldSubmissionDate = resultSet.getString("SUBMISSION");
-			
-			if (newUserId == 0) {
-				newUserId = oldUserID;
-			}
-	        if (newFirst.isEmpty()) {
-	        	newFirst = oldFirst;
-	        }
-	        if (newLast.isEmpty()) {
-	        	newLast = oldLast;
-	        }
-	        if (newGrade == 0) {
-	              newGrade = 0;
-	        }
-	        if (newLetterGrade.isEmpty() || newLetterGrade == null) {
-	        	newLetterGrade = oldLetterGrade;
-	        }
-	        if (newSubmissionDate.trim().isEmpty() || newSubmissionDate == null) {
-	        	newSubmissionDate = oldSubmissionDate;
-	        }
-	        
-	        
-	    } catch (Exception e) {
-	    	 e.printStackTrace();
-	    
-		} finally {
-			if (statement != null) {
-				statement.close();
-			}
-			if (connection != null) {
-				connection.close();
-			}
-		}   
-	    
-	    try {	 
-	    	connection = DatabaseConnection.getConnection();
-	        String sql2 = "update " + tableName + " set GRADE = ?, LETTER =?, SUBMISSION = TO_TIMESTAMP(?, 'YYYY-MM-DD HH24:MI:SS') where USERID = ?";
-	        statement = connection.prepareStatement(sql2);
-	        statement.setInt(1, newGrade);
-	        statement.setString(2, newLetterGrade);
-	        statement.setString(3, newSubmissionDate);
-	        statement.setInt(4, newUserId);
-	        rowsUpdated = statement.executeUpdate();
-	        
-	    } catch (Exception e) {
-	        e.printStackTrace();
-	        
-	    } finally {
-            if (statement != null) {
-                statement.close();
-            }
-            if (connection != null) {
-                connection.close();
-            }
-       }	
-	    return rowsUpdated;
+		
+		// Retrieves the student's existing grade record from the database.
+    // The table identifies the exam grade table, and userId identifie the student whose grade should be retrieved.
+		EditDAO.GradeRecord existingGrade = editDAO.getGrade(table, userId);
+
+    // Uses the submitted letter grade if it is not blank.
+    // Otherwise, keeps the existing letter grade.
+		String updatedLetterGrade = keepExistingIfBlank(letterGrade, existingGrade.getLetterGrade());
+
+		// Uses the submitted submission date if it is not blank.
+  	// Otherwise, keeps the existing submission date.
+		String updatedSubmission = keepExistingIfBlank(submission, existingGrade.getSubmission());
+
+		// Grade 0 is treated as a valid grade, not as a blank field.
+		// Passes the table, existing student's ID, numeric grade,
+		// final letter grade, and final submission date to the DAO.
+		// The DAO executes the database UPDATE statement.
+		// Returns the number of rows updated.
+		return editDAO.updateGrade(table, existingGrade.getUserId(), grade, updatedLetterGrade, updatedSubmission);
 	}
-	
+
 }
